@@ -1,0 +1,6 @@
+{
+    "wiz.codePolicies.IAC Configuration": [],
+    "wiz.codePolicies.secrets": [
+        "Default secrets policy"
+    ]
+}
