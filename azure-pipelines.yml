@@ -16,7 +16,7 @@ steps:
   displayName: 'Run a multi-line script'
 
 # Pre-pull the docker image so it is available for the scan task
-- script: docker pull mcr.microsoft.com/windows/servercore:ltsc2025
+- script: docker pull mcr.microsoft.com/windows/servercore:ltsc2019
   displayName: 'Pre-pull Docker Image'
 
 - task: wiz@0
@@ -28,6 +28,6 @@ steps:
     succeedOnFailures: true
     policyHitsOnly: false
     path: '.'
-    image: 'mcr.microsoft.com/windows/servercore:ltsc2025'
+    image: 'mcr.microsoft.com/windows/servercore:ltsc2019'
     name: 'Windows LTSC2019 Image Scan'
     scanSecrets: true
