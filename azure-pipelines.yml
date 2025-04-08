@@ -2,7 +2,9 @@ trigger:
 - main
 
 pool:
-  vmImage: 'windows-2019'
+  name: Default
+  demands:
+    - agent.name -equals my-windows-agent
 
 steps:
 - script: echo Hello, world!
