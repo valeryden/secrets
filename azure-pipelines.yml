@@ -24,6 +24,6 @@ steps:
     succeedOnFailures: true
     policyHitsOnly: false
     path: '.'
-    image: 'mcr.microsoft.com/windows:ltsc2019'
+    image: 'mcr.microsoft.com/windows/servercore:ltsc2025'
     name: 'Windows LTSC2019 Image Scan'
     scanSecrets: true
