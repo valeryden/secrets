@@ -1,0 +1,37 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- script: |
+    # Step 1: Download Wiz CLI
+    curl -Lo wizcli.exe https://downloads.wiz.io/wizcli/latest/wizcli-windows-amd64.exe
+
+    # Verify signature (if necessary)
+    curl -Lo public_key.asc https://downloads.wiz.io/wizcli/public_key.asc
+    gpg --import public_key.asc
+    cd /tmp
+    curl -Lo wizcli-sha256 https://downloads.wiz.io/wizcli/latest/wizcli-windows-amd64.exe-sha256
+    curl -Lo wizcli-sha256.sig https://downloads.wiz.io/wizcli/latest/wizcli-windows-amd64.exe-sha256.sig
+    gpg --verify /tmp/wizcli-sha256.sig /tmp/wizcli-sha256
+    echo "$(cat /tmp/wizcli-sha256) wizcli" | sha256sum --check
+
+    # Step 2: Set environment variables for Wiz CLI
+    echo "Setting environment variables"
+    echo "##vso[task.setvariable variable=WIZ_CLIENT_ID]$(WIZ_CLIENT_ID)"
+    echo "##vso[task.setvariable variable=WIZ_CLIENT_SECRET]$(WIZ_CLIENT_SECRET)"
+
+    # Step 3: Pull Docker Image and Scan
+    docker pull mcr.microsoft.com/windows:ltsc2019
+    wizcli docker scan --image mcr.microsoft.com/windows:ltsc2019
+  displayName: 'Download and scan Docker image with Wiz CLI'
